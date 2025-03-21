@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}اضافة المشتركين بالقرعة دارت{% endblock %}
+{% block content %}
+
+<div style="width:900px;margin:auto;color:black;font-size:20px;font-weight:bold;">
+    المرحلة الحالية: إضافة المشاركين
+
+    <form action="" method="POST" novalidate onsubmit="clearInput();">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="sbt" value="أضف المشاركين">
+    </form>
+</div>
+
+<script>
+    function clearInput() {
+        let inputField = document.getElementById("id_name"); // تأكد من أن `id_name` هو المعرف الصحيح
+        if (inputField) {
+            setTimeout(() => {
+                inputField.value = "";
+                inputField.focus();
+            }, 10);
+        }
+    }
+
+    function focusInput() {
+        let inputField = document.getElementById("id_name");
+        if (inputField) {
+            inputField.focus();
+        }
+    }
+
+    // منع المتصفح من حفظ وإعادة تحميل القيم المخزنة في الإدخال
+    window.onload = function () {
+        focusInput();
+        let inputField = document.getElementById("id_name");
+        if (inputField) {
+            inputField.value = ""; // التأكد من مسح الحقل عند إعادة التحميل
+        }
+    };
+</script>
+
+{% endblock %}
+
+

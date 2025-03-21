@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}انشاء قرعة{% endblock %}
+{% block content %}
+
+<div style="width:900px;margin:auto;color:black;font-size:20px;font-weight:bold;">
+    <center>
+{{msg|safe}}
+<form action="/new/" method="GET">
+    <label for="email">ادخل ايميل صحيح ليصلك رمز القرعة دارت:</label><br>
+  <center>  <input type="email" id="email" name="email" required></center>
+    <button type="submit">أنشئ قرعة جديدة</button>
+</form>
+</center>
+</div>
+{% endblock %}

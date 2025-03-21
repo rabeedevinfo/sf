@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Koraa List</title>
+    <style>
+        /* Simple table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+
+
+<div style="width:900px;margin:auto;">
+    <form method="get" action="{% url 'tombola' %}">
+    <label for="hex_code">رمز القرعة:</label>
+    <input type="text" id="hex_code" name="hex_code" placeholder="أدخل رمز القرعة">
+    <button type="submit">Filter</button>
+</form>
+        <h1>مميزات القرعة(دارت)</h1>
+
+    <!-- Loop through the Code_Koraa objects -->
+    {% for code_koraa in code_koraa_objects %}
+
+        <h2>كود القرعة: {{ code_koraa.hex_code }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>مبلغ القرعة</th>
+                    <th>عدد المشاركين</th>
+                    <th>تاريخ البداية</th>
+                    <th>تاريخ النهاية</th>
+                    <th>أسماء المشاركين</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ code_koraa.amount }}</td>
+                    <td>{{ code_koraa.number_part }}</td>
+                    <td>{{ code_koraa.date_deb }}</td>
+                    <td>{{ code_koraa.date_fin }}</td>
+                    <td>
+                        <!-- Table for participants under each Code_Koraa -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>أسماء المشاركين</th>
+                                    <th>Order</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for participant in code_koraa.participants.all %}
+                                    <tr>
+                                        <td>{{ participant.name }}</td>
+                                        <td>{{ participant.order }}</td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="2">No participants found.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+    </div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}مراجعة نتيجة قرعة سابقة{% endblock %}
+{% block content %}
+
+<div style="width:900px;margin:auto;">
+    <form method="get" action="{% url 'fin' %}">
+    <label for="hex_code">رمز القرعة:</label>
+    <input type="text" id="hex_code" name="hex_code" placeholder="أدخل رمز القرعة">
+    <button style="margin-right: 0px ;" type="submit">عرض</button>
+</form>
+       <p id="titre"><h1>مميزات القرعة(دارت)</h1></p>
+
+    <!-- Loop through the Code_Koraa objects -->
+    {% for code_koraa in code_koraa_objects %}
+
+        <h2>كود القرعة: {{ code_koraa.hex_code }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>مبلغ القرعة</th>
+                    <th>عدد المشاركين</th>
+                    <th>مبلغ المشاركة</th>
+                    <th>تاريخ البداية</th>
+                    <th>تاريخ النهاية</th>
+                    <th>أسماء المشاركين</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ code_koraa.amount }}</td>
+                    <td>{{ code_koraa.number_part }}</td>
+                     <td>{{ code_koraa.montant_part|floatformat:2 }}</td>
+                    <td>{{ code_koraa.date_deb|date:"d/m/Y" }}</td>
+                    <td>{{ code_koraa.date_fin|date:"d/m/Y" }}</td>
+                    <td>
+                        <!-- Table for participants under each Code_Koraa -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>أسماء المشاركين</th>
+                                    <th>الترتيــــب</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for participant in code_koraa.participants.all %}
+                                    <tr>
+                                        <td>{{i}}{{ participant.name }}</td>
+                                        <td>{{ participant.order }}</td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="2">No participants found.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+
+<a style="color:green;" id="whatsapp-share" target="_blank">Share on WhatsApp</a>
+
+<script>
+    document.getElementById("whatsapp-share").href =
+        "https://api.whatsapp.com/send?text=" + encodeURIComponent(document.title + " " + window.location.href);
+</script>
+
+
+    </div>
+
+
+{% endblock %}

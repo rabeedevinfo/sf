@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Code Koraa</title>
+</head>
+<body>
+    <h2>Add Code Koraa</h2>
+
+   <form action=""  method="POST" novalidate>
+
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+		
+    </form>
+
+</body>
+<script>
+console.log("JavaScript is running");
+function date_end(){
+    // Get the values from the fields
+    let numberpart = document.getElementById("id_number_part").value;
+    let datedeb = document.getElementById("id_date_deb").value;
+
+    // Set the value of the "id_date_fin" input field
+    document.getElementById("id_date_fin").value = datedeb + numberpart; // Using .value instead of .innerText
+}
+
+function compt(){
+    document.addEventListener("DOMContentLoaded", function() {
+    // Now the DOM is fully loaded, we can safely attach event listeners
+    document.getElementById("id_date_deb").addEventListener('blur', date_end);
+});
+}
+
+// Call compt to initialize the event listener
+compt();
+</script>
+
+</html>

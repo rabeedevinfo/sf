@@ -1,0 +1,58 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form with Multiple Event Handlers</title>
+</head>
+<body>
+    <h2>Form with JavaScript Example</h2>
+
+    <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Render the form fields here -->
+        <button type="submit">Save</button>
+    </form>
+
+   
+</body>
+ <!-- JavaScript goes here -->
+    <script>
+        // Make sure the DOM is ready before running scripts
+        document.addEventListener("DOMContentLoaded", function() {
+
+            // Define the functions to be called on events
+            function delayedDateEnd() {
+                console.log("setTimeout triggered, calling date_end() after 2 seconds...");
+                setTimeout(function() {
+                    date_end();  // Call date_end after 2 seconds
+                }, 4000);  // Delay of 2 seconds
+            }
+
+            function date_end() {
+                alert("date_end function called!");
+                
+                let numberpart = document.getElementById("id_number_part").value;
+                let datedeb = document.getElementById("id_date_deb").value;
+
+                console.log("Number Part: " + numberpart);
+                console.log("Start Date: " + datedeb);
+
+                document.getElementById("id_date_fin").value = datedeb + numberpart;
+            }
+
+            // Attach event listener to input field
+            const dateDebInput = document.getElementById("id_date_deb");
+            
+            // Use addEventListener to call multiple functions on the same event
+            dateDebInput.addEventListener('blur', function() {
+                delayedDateEnd();  // Function 1
+                date_end();         // Function 2
+            });
+
+        });
+    </script>
+</html>
+
+    
+
